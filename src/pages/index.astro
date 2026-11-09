@@ -42,7 +42,7 @@ const jsonLd = {
 ---
 <Base lang="uk" title={title} description={description}>
   <Fragment slot="head">
-    <link rel="preload" href="/fonts/geologica-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}fonts/geologica-cyrillic-wght-normal.woff2`} as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#FFFFFF" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </Fragment>
