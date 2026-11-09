@@ -1,0 +1,624 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CallButton from "../components/CallButton.astro";
+import FutureLink from "../components/FutureLink.astro";
+import Photo from "../components/Photo.astro";
+import Icon from "../components/Icon.astro";
+import palata from "../assets/stacionar-palata.webp";
+import komanda from "../assets/komanda-medbud.jpg";
+import "../styles/site.css";
+import { ADDRESS, PHONES, EMAIL, TELEGRAM, INSTAGRAM, FACEBOOK, SOON } from "../data/clinic";
+
+const title = "Медбуд — лікарня повного циклу, Солом'янський район, Київ";
+const description = "Поліклініка, діагностика, лабораторія, цілодобовий стаціонар, амбулаторна реабілітація безоплатно за НСЗУ. Київ, пр-т Лобановського, 17. Тел. (044) 596-77-77.";
+
+const route = [
+  { label: "Консультація", href: "#directions" },
+  { label: "Діагностика й аналізи", href: "#diagnostics" },
+  { label: "Операція і стаціонар", href: "#hospital", note: "цілодобово" },
+  { label: "Реабілітація", href: "#rehab", note: "амбулаторна — за НСЗУ" },
+  { label: "Ветеранам", href: "#veterans" },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  additionalType: "https://schema.org/Hospital",
+  name: "Медбуд",
+  legalName: "ДП «Медбуд»",
+  telephone: "+380445967777",
+  email: EMAIL.display,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "пр-т Валерія Лобановського, 17",
+    addressLocality: "Київ",
+    addressCountry: "UA",
+  },
+  sameAs: [INSTAGRAM.href, FACEBOOK.href],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="preload" href="/fonts/geologica-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#FFFFFF" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+  <Header slot="header" />
+
+  <Section id="hero" class="hero" rec="R-001,R-007,R-009,R-018,R-023,R-025,R-044,R-050">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <h1 data-rec="R-005">Лікарня повного циклу на Лобановського, 17: від першої консультації до реабілітації</h1>
+        <p class="hero__lead">
+          Поліклініка, діагностика, лабораторія, власний цілодобовий стаціонар і реабілітація — в одному корпусі на пр-ті Валерія Лобановського, 17, у Солом'янському районі Києва.
+        </p>
+        <div class="btn-row btn-row--stack hero__actions">
+          <CallButton rec="R-007,R-008" />
+          <CallButton channel="telegram" variant="secondary" />
+        </div>
+      </div>
+
+      <nav class="hero__route" aria-label="Маршрут пацієнта" data-rec="R-007">
+        <ol role="list" class="route">
+          {route.map((r, i) => (
+            <li class="route__stop" style={`--i:${i}`}>
+              <a class="route__link" href={r.href}>
+                <span class="route__mark" aria-hidden="true"></span>
+                <span class="route__label">{r.label}</span>
+                {r.note && <span class="route__note">{r.note}</span>}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+  </Section>
+
+  <!-- ---------- directions: polyclinic, diagnostics, laboratory ---------- -->
+  <Section id="directions" class="directions" rec="R-011">
+    <div class="container track">
+      <div class="section-head">
+        <h2>Поліклініка, діагностика, лабораторія</h2>
+        <p class="lead muted">Почніть із консультації, а обстеження й аналізи зробіть тут же, в одній будівлі.</p>
+      </div>
+
+      <div class="dirs">
+        <article class="dir dir--clinic">
+          <h3 class="stop dir__title"><span class="stop-mark" aria-hidden="true"></span>Поліклініка</h3>
+          <div class="dir__body">
+            <p class="lead">Консультації вузьких фахівців: травматолог, гінеколог, хірург, психотерапевт та інші лікарі поліклініки.</p>
+            <FutureLink note={SOON} class="dir__more">Про напрям</FutureLink>
+          </div>
+          <p class="dir__org">
+            Для організацій: медкомісії, профогляди, довідки для працівників. Пишіть на <a class="text-link" href={EMAIL.href}>{EMAIL.display}</a>
+          </p>
+        </article>
+
+        <article class="dir dir--diag" id="diagnostics">
+          <h3 class="stop dir__title"><span class="stop-mark" aria-hidden="true"></span>Діагностика</h3>
+          <ul role="list" class="diag-list">
+            <li>Ультразвукове дослідження</li>
+            <li>Рентгенографія</li>
+            <li>Мамографія</li>
+            <li>Ендоскопія</li>
+          </ul>
+          <FutureLink note={SOON} class="dir__more">Про напрям</FutureLink>
+        </article>
+
+        <article class="dir dir--lab">
+          <h3 class="stop dir__title"><span class="stop-mark" aria-hidden="true"></span>Лабораторія</h3>
+          <div class="lab">
+            <p class="lab__figure"><span class="lab__num">300+</span> <span class="lab__unit">видів аналізів</span></p>
+            <div class="lab__body">
+              <p>Гематологія, гемостаз, аналізи сечі та калу, цитологія, печінкові й ниркові проби.</p>
+              <p class="caption muted">Кількість аналізів за даними DOC.UA.</p>
+              <FutureLink note={SOON} class="dir__more">Про напрям</FutureLink>
+            </div>
+          </div>
+        </article>
+
+        <p class="dir-online">
+          Не можете приїхати? Консультація лікаря онлайн у Viber або Telegram, оплата до консультації.
+          <FutureLink note={SOON} class="dir__more">Як це працює</FutureLink>
+        </p>
+      </div>
+
+      <div class="cta-line">
+        <p>Вартість і вільний час підкаже кол-центр.</p>
+        <CallButton rec="R-008" />
+      </div>
+    </div>
+  </Section>
+
+  <!-- ---------- hospital: the night block ---------- -->
+  <Section id="hospital" class="hospital on-dark" rec="R-011">
+    <div class="container track hospital__track">
+      <p class="hospital__word wipe">Цілодобово</p>
+      <h2 class="stop hospital__title"><span class="stop-mark" aria-hidden="true"></span>Хірургічний і неврологічний стаціонар — у тій самій будівлі</h2>
+
+      <div class="hospital__cols">
+        <ul role="list" class="hospital__list">
+          <li>Планова та екстрена хірургія</li>
+          <li>Госпіталізація цілодобово</li>
+          <li>Неврологічний стаціонар</li>
+          <li>Анестезіологія та інтенсивна терапія</li>
+        </ul>
+        <div class="hospital__power">
+          <h3>Коли вимикають світло</h3>
+          <p>У лікарні власна газова котельня, свердловина і резервне живлення операційних та реанімації.</p>
+        </div>
+      </div>
+
+      <Photo
+        src={palata}
+        alt="Оновлена палата стаціонару: функціональне ліжко, приліжкова тумба, вікно з фіранками"
+        caption="Палата стаціонару після оновлення"
+        widths={[480, 800, 1100]}
+        sizes="(min-width: 1280px) 1100px, (min-width: 1024px) 80vw, 90vw"
+        ratio="16 / 9"
+        position="50% 60%"
+        class="hospital__photo"
+        rec="R-002"
+      />
+
+      <div class="cta-line cta-line--dark">
+        <p>Про госпіталізацію й операцію спершу поговоріть із кол-центром.</p>
+        <div class="btn-row btn-row--stack">
+          <CallButton variant="inverse" rec="R-008" />
+          <CallButton channel="telegram" variant="outline-inverse" />
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ---------- rehab: the blue block, veterans hub ---------- -->
+  <Section id="rehab" class="rehab on-dark" rec="R-011">
+    <div class="container track rehab__track">
+      <div class="rehab__grid">
+        <div class="rehab__main">
+          <h2 class="stop"><span class="stop-mark" aria-hidden="true"></span>Амбулаторна реабілітація — безоплатно за програмою НСЗУ</h2>
+          <p class="lead">Відновлення після інсульту, травм і операцій, фізіотерапія.</p>
+          <p class="rehab__package">Пакет програми медичних гарантій «Реабілітаційна допомога дорослим та дітям в амбулаторних умовах».</p>
+          <p>Фізіотерапія: магніто-, УВЧ-, лазеро- та ударно-хвильова терапія, спелеотерапія, масаж.</p>
+          <p>Чи підходите ви під програму і які документи взяти з собою, підкаже кол-центр.</p>
+          <div class="btn-row btn-row--stack">
+            <CallButton variant="inverse" rec="R-008" />
+            <CallButton channel="telegram" variant="outline-inverse" />
+          </div>
+        </div>
+
+        <article class="veterans" id="veterans">
+          <h3>Ветеранський хаб «Сила єдності»</h3>
+          <p class="veterans__since">Відкрито в серпні 2026 року</p>
+          <p>Фізична реабілітація, психологічна та юридична підтримка для ветеранів.</p>
+          <p class="muted">Як потрапити до хабу, розкажуть телефоном.</p>
+          <CallButton rec="R-008" />
+        </article>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ---------- trust: facts that can be checked ---------- -->
+  <Section id="trust" class="trust" rec="R-011">
+    <div class="container track">
+      <h2 class="stop"><span class="stop-mark" aria-hidden="true"></span>Що можна перевірити</h2>
+      <div class="trust__grid">
+        <div class="trust__rating">
+          <p class="trust__score"><span class="trust__num">4,9</span><span class="trust__of">з 5</span></p>
+          <p class="lead">Оцінка «Медбуд» на DOC.UA за 2043 відгуками пацієнтів.</p>
+          <dl class="trust__parts">
+            <div><dt>Поліклініка</dt><dd>4,9 <span class="muted">(1477 відгуків)</span></dd></div>
+            <div><dt>Хірургічний стаціонар</dt><dd>4,8 <span class="muted">(347 відгуків)</span></dd></div>
+            <div><dt>Реабілітація</dt><dd>4,9 <span class="muted">(164 відгуки)</span></dd></div>
+          </dl>
+          <p class="caption muted">Джерело: DOC.UA, дані на листопад 2026 року.</p>
+        </div>
+        <div class="trust__facts">
+          <div>
+            <h3>Обладнання</h3>
+            <p>УЗД-апарати Philips та Esaote, ендоскопія Olympus, цифрова рентгеноскопія, рентген і мамографія.</p>
+            <p class="caption muted">За даними DOC.UA.</p>
+          </div>
+          <div>
+            <h3>Ліцензія МОЗ України</h3>
+            <p>Серія АВ № 567064 від 14.10.2010, переоформлена 16.08.2012, серія АД № 063754.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ---------- contacts: the line ends at the address ---------- -->
+  <Section id="contacts" class="contacts" rec="R-024">
+    <div class="container track track--end">
+      <div class="contacts__head">
+        <h2 class="stop contacts__address"><span class="stop-mark stop-mark--final" aria-hidden="true"></span>{ADDRESS.short}</h2>
+        <p class="lead">{ADDRESS.full}, Солом'янський район.</p>
+        <a class="text-link map-link" href={ADDRESS.map} target="_blank" rel="noopener"><Icon name="map" size={20} /><span>Відкрити на карті</span></a>
+      </div>
+
+      <div class="contacts__grid">
+        <div class="contacts__info">
+          <ul role="list" class="phones" data-rec="R-014">
+            {PHONES.map((p) => (
+              <li><a class="phone-row" href={p.href}><span class="phone-row__num">{p.display}</span><span class="phone-row__note">{p.note}</span></a></li>
+            ))}
+          </ul>
+          <ul role="list" class="channels" data-rec="R-036">
+            <li><a class="channel" href={EMAIL.href}><Icon name="mail" size={20} /><span>{EMAIL.display}</span></a></li>
+            <li><a class="channel" href={TELEGRAM.href} target="_blank" rel="noopener"><Icon name="telegram" size={20} /><span>Telegram {TELEGRAM.display}</span></a></li>
+            <li><a class="channel" href={INSTAGRAM.href} target="_blank" rel="noopener"><Icon name="instagram" size={20} /><span>Instagram {INSTAGRAM.display}</span></a></li>
+            <li><a class="channel" href={FACEBOOK.href} target="_blank" rel="noopener"><Icon name="facebook" size={20} /><span>Facebook {FACEBOOK.display}</span></a></li>
+          </ul>
+          <div class="hours">
+            <p><strong>Стаціонар працює цілодобово.</strong></p>
+            <p class="muted">Графік поліклініки уточнюйте за телефоном.</p>
+            <FutureLink note={SOON} class="dir__more">Онлайн-запис</FutureLink>
+          </div>
+        </div>
+        <Photo
+          src={komanda}
+          alt="Колектив «Медбуд» на сходах біля входу до лікарні"
+          caption="Колектив «Медбуд» біля входу до лікарні"
+          widths={[480, 800, 1024]}
+          sizes="(min-width: 1024px) 50vw, 90vw"
+          ratio="3 / 2"
+          class="contacts__photo"
+          rec="R-002"
+        />
+      </div>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+</Base>
+
+<script src="../scripts/route.ts"></script>
+
+<style is:global>
+  /* ---------- hero ---------- */
+  .hero { background: var(--color-bg); }
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  }
+  .hero__text { display: grid; gap: var(--s-3); }
+  .hero h1 { max-width: 15.5em; text-wrap: balance; }
+  .hero__lead {
+    max-width: 36rem;
+    font-size: 1.0625rem;
+    color: var(--color-text-muted);
+  }
+  .hero__actions { margin-top: var(--s-1); }
+
+  /* route: vertical on phones, a horizontal line along the bottom of the first screen from 1024 */
+  .hero__route { position: relative; padding-bottom: var(--s-5); }
+  .route { position: relative; display: grid; }
+  .route::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--track-x) - var(--track-w) / 2);
+    top: calc(var(--target) / 2);
+    bottom: calc(-1 * var(--s-5));
+    width: var(--track-w);
+    background: var(--color-route);
+    transform-origin: top center;
+  }
+  .route__link {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--s-2);
+    min-height: var(--target);
+    padding-left: var(--track-indent);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .route__mark {
+    position: absolute;
+    left: calc(var(--track-x) - var(--stop) / 2);
+    top: calc(50% - var(--stop) / 2);
+    width: var(--stop);
+    height: var(--stop);
+    background: var(--color-route);
+    box-shadow: 0 0 0 4px var(--color-bg);
+    transform: rotate(45deg);
+    transition: transform var(--dur-mid) var(--ease-out);
+  }
+  .route__label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1875rem;
+    letter-spacing: var(--track-head);
+  }
+  .route__note { font-size: var(--fs-caption); color: var(--color-text-muted); }
+  .route__link:hover { color: var(--color-accent); }
+  .route__link:hover .route__mark { transform: rotate(45deg) scale(1.25); }
+  .route__link:active .route__mark { transform: rotate(45deg) scale(0.9); }
+
+  @media (min-width: 1024px) {
+    .hero__inner {
+      gap: var(--s-5);
+    }
+    .hero__lead { font-size: var(--fs-lead); line-height: 1.45; max-width: 40rem; }
+    .hero__route { padding-bottom: var(--s-5); }
+    .route { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gutter); }
+    .route::before {
+      left: var(--track-x);
+      right: calc(-1 * var(--space));
+      top: calc(var(--stop) / 2 + 2px);
+      bottom: auto;
+      width: auto;
+      height: var(--track-w);
+      transform-origin: left center;
+    }
+    /* the line turns down at the first stop and continues into the next section */
+    .hero__route::after {
+      content: "";
+      position: absolute;
+      left: calc(var(--track-x) - var(--track-w) / 2);
+      top: calc(var(--stop) / 2 + 2px);
+      bottom: 0;
+      width: var(--track-w);
+      background: var(--color-route);
+    }
+    .route__link {
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 0.25rem;
+      padding: calc(var(--stop) + var(--s-3)) 0 0 1.75rem;
+      min-height: 0;
+    }
+    .route__mark { left: calc(var(--track-x) - var(--stop) / 2); top: 2px; }
+  }
+
+  /* Effect 1: the route draws itself once on load; the headline and buttons are never hidden */
+  @keyframes route-draw-x { from { transform: scaleX(0); } }
+  @keyframes route-draw-y { from { transform: scaleY(0); } }
+  @keyframes stop-in { from { opacity: 0; transform: rotate(45deg) scale(0.6); } }
+  .route::before { animation: route-draw-y 700ms var(--ease-out) both; }
+  .route__mark { animation: stop-in 200ms var(--ease-out) both; animation-delay: 300ms; }
+  @media (min-width: 1024px) {
+    .route::before { animation-name: route-draw-x; }
+    .route__mark { animation-delay: calc(350ms + var(--i) * 60ms); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .route::before, .route__mark { animation: none; }
+    .route__link:hover .route__mark, .route__link:active .route__mark { transform: rotate(45deg); }
+  }
+
+  /* ---------- shared section pieces ---------- */
+  .cta-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-3);
+    margin-top: var(--s-5);
+  }
+  .cta-line p { font-size: var(--fs-lead); line-height: 1.4; max-width: 30rem; }
+  .dir__more {
+    min-height: 44px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: underline dashed 1px;
+    text-underline-offset: 0.25em;
+  }
+
+  /* ---------- directions ---------- */
+  .directions { background: var(--color-bg); }
+  .dirs { display: grid; gap: var(--s-5); margin-top: var(--s-5); }
+  .dir { display: grid; gap: var(--s-3); justify-items: start; }
+  .dir__title { font-size: var(--fs-stop); }
+  .dir__body { display: grid; gap: var(--s-1); justify-items: start; max-width: 40rem; }
+  .dir__org {
+    max-width: 34rem;
+    padding: var(--s-2) var(--s-3);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-size: 1rem;
+  }
+  .dir__org a { overflow-wrap: anywhere; }
+  .diag-list {
+    display: grid;
+    gap: var(--s-1) var(--s-4);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+    letter-spacing: var(--track-head);
+  }
+  .lab { display: grid; gap: var(--s-3); }
+  .lab__figure { display: grid; line-height: 1; }
+  .lab__num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-figure);
+    letter-spacing: -0.03em;
+    color: var(--color-accent);
+  }
+  .lab__unit { font-size: var(--fs-lead); margin-top: var(--s-1); }
+  .lab__body { display: grid; gap: var(--s-1); justify-items: start; max-width: 32rem; }
+  .dir-online { font-size: 1rem; color: var(--color-text-muted); max-width: 44rem; }
+  .dir-online .future-link { display: flex; width: max-content; }
+
+  @media (min-width: 768px) {
+    .diag-list { grid-template-columns: repeat(2, minmax(0, max-content)); }
+    .lab { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: end; }
+  }
+  @media (min-width: 1024px) {
+    .dirs { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--s-6) var(--s-5); }
+    .dir--clinic { grid-column: 1 / -1; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); column-gap: var(--s-5); align-items: start; }
+    .dir--clinic .dir__title { grid-column: 1 / -1; }
+    .dir--clinic .dir__org { align-self: end; }
+    .dir--diag { grid-column: 1; align-content: start; }
+    .diag-list { grid-template-columns: minmax(0, 1fr); font-size: var(--fs-stop); gap: var(--s-2); }
+    .diag-list li { padding-left: var(--s-3); position: relative; }
+    .diag-list li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 8px; height: 8px; background: var(--color-accent); transform: rotate(45deg); }
+    .dir--lab { grid-column: 2; align-content: start; padding: var(--s-4); background: var(--color-surface); border-radius: var(--radius); }
+    .dir--lab .stop-mark { display: none; }
+    .dir--lab .lab { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .dir-online { grid-column: 1 / -1; }
+  }
+
+  /* ---------- hospital (night) ---------- */
+  .hospital { background: var(--color-night); color: var(--color-on-night); }
+  .hospital__track { --track-color: var(--color-sky); --stop-hollow: var(--color-night); }
+  .hospital__word {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-display);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color-sky);
+    margin-bottom: var(--s-4);
+    transition: clip-path 800ms var(--ease-out);
+  }
+  .js .hospital__word:not(.is-on) { clip-path: inset(0 100% 0 0); }
+  .hospital__title { max-width: 22em; }
+  .hospital__cols { display: grid; gap: var(--s-5); margin-top: var(--s-5); }
+  .hospital__list { display: grid; gap: var(--s-2); }
+  .hospital__list li {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+    letter-spacing: var(--track-head);
+  }
+  .hospital__power {
+    display: grid;
+    gap: var(--s-2);
+    align-content: start;
+    padding-top: var(--s-3);
+    border-top: 2px solid var(--color-sky);
+    color: var(--color-on-night-muted);
+  }
+  .hospital__power h3 { color: var(--color-on-night); }
+  .hospital__power p { font-size: var(--fs-lead); line-height: 1.45; }
+  .hospital .hospital__photo { margin-top: var(--s-5); }
+  .hospital .hospital__photo figcaption { color: var(--color-on-night-muted); }
+  .cta-line--dark p { color: var(--color-on-night-muted); }
+  @media (min-width: 1024px) {
+    .hospital__cols { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--s-6); }
+  }
+  @media (max-width: 767px) {
+    .hospital__word { transition-duration: 500ms; }
+  }
+
+  /* ---------- rehab (blue) ---------- */
+  .rehab { background: var(--color-accent); color: var(--color-accent-ink); }
+  .rehab__track { --track-color: var(--color-bg); --stop-hollow: var(--color-accent); }
+  .rehab .stop-mark { border-color: var(--color-bg); }
+  .rehab__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-5); }
+  .rehab__main { display: grid; gap: var(--s-3); justify-items: start; }
+  .rehab__main h2 { max-width: 18em; }
+  .rehab__main > p { max-width: 38rem; }
+  .rehab__package { font-weight: 500; font-size: var(--fs-body); }
+  .rehab__main .btn-row { margin-top: var(--s-2); }
+  .veterans {
+    display: grid;
+    gap: var(--s-2);
+    justify-items: start;
+    align-content: start;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    background: var(--color-bg);
+    color: var(--color-text);
+    border-radius: var(--radius);
+    border-top: 6px solid var(--color-route);
+  }
+  .veterans h3 { font-size: var(--fs-stop); }
+  .veterans__since { font-weight: 500; color: var(--color-accent); }
+  .veterans :focus-visible { outline-color: var(--color-focus); }
+  @media (min-width: 1024px) {
+    .rehab__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--s-5); align-items: start; }
+    .veterans { margin-top: var(--s-5); }
+  }
+
+  /* ---------- trust ---------- */
+  .trust { background: var(--color-bg); }
+  .trust__grid { display: grid; gap: var(--s-5); margin-top: var(--s-5); }
+  .trust__rating { display: grid; gap: var(--s-3); align-content: start; }
+  .trust__score { display: flex; align-items: baseline; gap: var(--s-2); line-height: 1; }
+  .trust__num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-figure);
+    letter-spacing: -0.03em;
+  }
+  .trust__of { font-size: var(--fs-lead); color: var(--color-text-muted); }
+  .trust__parts { display: grid; gap: var(--s-2); margin: 0; }
+  .trust__parts dt { font-size: 1rem; color: var(--color-text-muted); }
+  .trust__parts dd { margin: 0; font-weight: 500; font-size: var(--fs-body); white-space: nowrap; }
+  .trust__facts { display: grid; gap: var(--s-4); align-content: start; }
+  .trust__facts > div { display: grid; gap: var(--s-1); }
+  @media (min-width: 768px) {
+    .trust__parts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
+  }
+  @media (min-width: 1024px) {
+    .trust__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--s-6); }
+  }
+
+  /* ---------- contacts: the line ends at the address ---------- */
+  .contacts { background: var(--color-surface); }
+  .contacts .track { --stop-hollow: var(--color-surface); }
+  .track--end::before { bottom: auto; height: calc(var(--block) + 0.36 * var(--fs-address) + 10px); }
+  .contacts__head { display: grid; gap: var(--s-2); justify-items: start; }
+  .contacts__address { font-size: var(--fs-address); }
+  .stop-mark--final { --stop: 20px; }
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    min-height: 44px;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+  .map-link svg { color: var(--color-accent); }
+  .map-link:hover { color: var(--color-accent-hover); }
+  .contacts__grid { display: grid; gap: var(--s-5); margin-top: var(--s-5); }
+  .contacts__info { display: grid; gap: var(--s-4); align-content: start; }
+  .phones { display: grid; }
+  .phone-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--s-2);
+    min-height: var(--target);
+    padding-block: 0.625rem;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .phone-row__num { font-weight: 500; font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); }
+  .phone-row__note { font-size: var(--fs-caption); color: var(--color-text-muted); }
+  .phone-row:hover { color: var(--color-accent); }
+  .phone-row:active { color: var(--color-accent-hover); }
+  .channels { display: grid; gap: 0.25rem; }
+  .channel {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    min-height: 44px;
+    color: var(--color-text);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .channel svg { color: var(--color-accent); flex: none; }
+  .channel:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: 0.2em; }
+  .hours { display: grid; gap: 0.25rem; justify-items: start; }
+  @media (min-width: 1024px) {
+    .contacts__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--s-6); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hospital__word { transition: none; }
+    .js .hospital__word:not(.is-on) { clip-path: none; }
+  }
+</style>

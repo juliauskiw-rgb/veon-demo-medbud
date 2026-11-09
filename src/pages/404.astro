@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import CallButton from "../components/CallButton.astro";
+import "../styles/site.css";
+---
+<Base lang="uk" title="Сторінку не знайдено — Медбуд" description="Такої сторінки немає. Поверніться на головну або зателефонуйте в кол-центр «Медбуд».">
+  <section class="nf">
+    <div class="container nf__inner">
+      <h1>Такої сторінки немає</h1>
+      <p class="lead muted">Можливо, адреса змінилася. Поверніться на головну або зателефонуйте, і кол-центр підкаже.</p>
+      <div class="btn-row">
+        <a class="btn btn--secondary" href="/">На головну</a>
+        <CallButton />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf__inner { display: grid; gap: var(--s-3); justify-items: start; padding-block: var(--s-6); }
+</style>

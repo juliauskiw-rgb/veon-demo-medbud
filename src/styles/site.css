@@ -1,0 +1,156 @@
+/* Medbud: shared type, layout, buttons and the route line. Values only through tokens.css. */
+body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-text);
+  font-variant-numeric: tabular-nums;
+}
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: var(--lh-head);
+  letter-spacing: var(--track-head);
+  margin: 0;
+}
+h1 { font-size: var(--fs-h1); line-height: 1.02; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+p, ul, ol { margin: 0; }
+ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+
+.container {
+  width: min(100% - 2 * var(--space), var(--container));
+  margin-inline: auto;
+}
+.lead { font-size: var(--fs-lead); line-height: 1.45; }
+.muted { color: var(--color-text-muted); }
+.caption { font-size: var(--fs-caption); line-height: 1.5; }
+
+::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+html { scrollbar-color: var(--color-accent) var(--color-surface); }
+
+/* Links inside text */
+.text-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--dur-fast) var(--ease-out), text-decoration-thickness var(--dur-fast) var(--ease-out);
+}
+.text-link:hover { color: var(--color-accent-hover); text-decoration-thickness: 2px; }
+.text-link:active { color: var(--color-text); }
+
+/* Focus: instant ring, inverse on dark and blue fields */
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; transition: none; }
+.on-dark :focus-visible { outline-color: var(--color-focus-inverse); }
+
+/* Buttons (links to tel:, Telegram) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: var(--btn-h);
+  padding: 0 1.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.btn__num { white-space: nowrap; }
+.btn svg { flex: none; transition: transform var(--dur-mid) var(--ease-out); }
+.btn:hover { transform: translateY(-1px); }
+.btn:hover svg { transform: translateX(3px); }
+.btn:active { transform: scale(0.98); }
+.btn--primary { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn--primary:hover { background: var(--color-accent-hover); }
+.btn--secondary { background: transparent; color: var(--color-accent); border-color: var(--color-accent); }
+.btn--secondary:hover { background: var(--color-surface); color: var(--color-accent-hover); border-color: var(--color-accent-hover); }
+.btn--inverse { background: var(--color-bg); color: var(--color-text); }
+.btn--inverse:hover { background: var(--color-surface); }
+.btn--outline-inverse { background: transparent; color: var(--color-on-night); border-color: var(--color-on-night); }
+.btn--outline-inverse:hover { background: var(--color-on-night); color: var(--color-night); }
+.btn--sm { min-height: var(--btn-h-sm); padding: 0 1.125rem; font-size: 1rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; }
+@media (max-width: 559px) {
+  .btn { white-space: normal; text-align: center; padding-inline: 1rem; max-width: 100%; }
+  .btn-row--stack { flex-direction: column; align-items: stretch; }
+  .btn-row--stack .btn { width: 100%; white-space: normal; text-align: center; padding-inline: 1rem; }
+}
+
+/* FutureLink: note anchored to the start of the item so it never leaves the screen */
+.future-link { cursor: default; }
+.future-link[aria-disabled="true"] { color: var(--color-text-muted); text-decoration: none; }
+.future-link[aria-disabled="true"]:hover { color: var(--color-text); }
+.future-link__note[aria-hidden="true"] {
+  left: 0;
+  transform: translateY(-4px);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+  letter-spacing: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.future-link:hover .future-link__note, .future-link:focus-visible .future-link__note { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .future-link__note[aria-hidden="true"], .future-link:hover .future-link__note { transform: none; }
+}
+
+/* Route line: a rail on the left of each section, one continuous line through the page */
+.track {
+  position: relative;
+  padding-left: var(--track-indent);
+  padding-block: var(--block);
+}
+.track::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--track-x) - var(--track-w) / 2);
+  top: 0;
+  bottom: 0;
+  width: var(--track-w);
+  background: var(--track-color, var(--color-route));
+  transform-origin: top center;
+  transition: transform var(--dur) var(--ease-out);
+}
+.stop { position: relative; }
+.stop-mark {
+  position: absolute;
+  left: calc(var(--track-x) - var(--track-indent) - var(--stop) / 2);
+  top: 0.32em;
+  width: var(--stop);
+  height: var(--stop);
+  background: var(--color-route);
+  border: 2px solid var(--color-route);
+  transform: rotate(45deg);
+  transition: background-color var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out);
+}
+h2.stop .stop-mark { top: 0.36em; }
+.stop-mark--ring { box-shadow: 0 0 0 3px var(--stop-ring, var(--color-bg)); }
+
+/* Effect 2: the rail grows into each section, a stop fills red when the reader reaches it (JS only) */
+.js .track:not(.is-on)::before { transform: scaleY(0); }
+.js .stop:not(.is-on) .stop-mark { background: var(--stop-hollow, var(--color-bg)); transform: rotate(45deg) scale(0.8); }
+
+/* Section head used in every block */
+.section-head { display: grid; gap: var(--s-3); max-width: 46rem; }
+.section-head p { color: inherit; }
+
+/* Photo frame */
+.photo { margin: 0; }
+.photo picture, .photo img { display: block; width: 100%; height: auto; }
+.photo img { border-radius: var(--radius); }
+.photo figcaption { margin-top: var(--s-1); font-size: var(--fs-caption); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .track:not(.is-on)::before { transform: none; }
+  .js .stop:not(.is-on) .stop-mark { background: var(--color-route); transform: rotate(45deg); }
+  .btn:hover, .btn:active, .btn:hover svg { transform: none; }
+}

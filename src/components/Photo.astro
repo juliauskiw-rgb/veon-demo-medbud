@@ -1,0 +1,31 @@
+---
+// Client photo: AVIF/WebP with srcset, fixed aspect ratio, lazy below the first screen (R-002).
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  widths: number[];
+  sizes: string;
+  ratio?: string;
+  position?: string;
+  class?: string;
+  rec?: string;
+}
+const { src, alt, caption, widths, sizes, ratio = "16 / 9", position = "50% 50%", class: cls, rec } = Astro.props;
+---
+<figure class:list={["photo", cls]} data-rec={rec} style={`--ratio:${ratio};--pos:${position}`}>
+  <Picture src={src} alt={alt} width={Math.max(...widths)} widths={widths} sizes={sizes} formats={["avif", "webp"]} fallbackFormat="jpg" quality={60} loading="lazy" decoding="async" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  figure :global(img) {
+    aspect-ratio: var(--ratio);
+    object-fit: cover;
+    object-position: var(--pos);
+    width: 100%;
+    height: auto;
+  }
+</style>

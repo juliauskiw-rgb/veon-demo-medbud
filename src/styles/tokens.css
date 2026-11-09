@@ -1,0 +1,130 @@
+/* Hallmark · shape: route line, one address (hero → directions → hospital → rehab → trust → contacts) · genre: editorial · theme: custom · job: book · idea: "весь шлях лікування — одна лінія на одній адресі" · vibe: "ясна, спокійна, впевнена лікарня, день і ніч"
+ * paper: #FFFFFF · accent: #0079A7 / route #ED1C24 · display: Geologica · body: IBM Plex Sans · hero: типографський H1, кнопка дзвінка, горизонтальна лінія маршруту з п'ятьма ромбами · nav: біла закріплена шапка, логотип, 6 пунктів, номер, «Подзвонити», Telegram · footer: білий, логотип, адреса, номер, неактивні розділи, рік · imagery: client photos · signature: одна червона лінія з ромбами від консультації до дверей на Лобановського, 17
+ * axes: light/geometric-sans/cool · surface: absolute · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: E (imagery), no real ultrasound room photo exists, so diagnostics holds on type and the only photos are the ward and the team */
+/* Hallmark · waive 7b · paper #FFFFFF from design/concept.md section 5 (bg #FFFFFF, veon-concept colors) · the approved concept splits the page into day (pure white clinic) and night (#071C29 ward); white is the day field and the client brand ground, tinting it would break the approved palette */
+/* Hallmark · waive 39b · primary call button 56px in design/concept.md (Кнопки: primary синяя 56 px, 48 в шапці) · the audience is anxious patients and older relatives on phones, the approved concept sets a 56px call target as the main action, header buttons stay 48px */
+/* Hallmark · answered F4 · the white filled button lives only on the night ward block where the blue one fails contrast, the page still has a single blue primary recipe for the call action */
+/* Client design tokens from design/concept.md (veon-concept: colors, fonts). Fonts are self-hosted subsets (latin + cyrillic). */
+@font-face {
+  font-family: "Geologica";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/geologica-cyrillic-wght-normal.woff2") format("woff2-variations"), url("/fonts/geologica-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Geologica";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/geologica-latin-wght-normal.woff2") format("woff2-variations"), url("/fonts/geologica-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/ibm-plex-sans-cyrillic-400-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/ibm-plex-sans-cyrillic-500-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* colour roles */
+  --color-bg: #FFFFFF;
+  --color-text: #0D2130;
+  --color-text-muted: #4A5D6B;
+  --color-accent: #0079A7;
+  --color-accent-hover: #006A93;
+  --color-accent-ink: #FFFFFF;
+  --color-route: #ED1C24;
+  --color-night: #071C29;
+  --color-night-2: #0C2A3C;
+  --color-on-night: #FFFFFF;
+  --color-on-night-muted: #B9CBD6;
+  --color-sky: #00ADEF;
+  --color-surface: #EAF2F5;
+  --color-line: #C9D7DE;
+  --color-line-night: #23455A;
+  --color-focus: #0079A7;
+  --color-focus-inverse: #FFFFFF;
+
+  /* type */
+  --font-display: "Geologica", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --fs-caption: 0.9375rem;  /* 15 */
+  --fs-body: 1.125rem;      /* 18 */
+  --fs-lead: 1.375rem;      /* 22 */
+  --fs-h3: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);   /* 22 → 28 */
+  --fs-h2: clamp(2rem, 1.4rem + 2.2vw, 2.75rem);       /* 32 → 44 */
+  --fs-h1: clamp(1.875rem, 0.9rem + 4.6vw, 5rem);     /* 30 → 80 */
+  --fs-stop: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);   /* 28 → 40 */
+  --fs-address: clamp(1.875rem, 1rem + 4.4vw, 3.5rem); /* 30 → 56 */
+  --fs-display: clamp(2.5rem, 10.4vw, 10rem);         /* 40 → 160 */
+  --fs-figure: clamp(4rem, 2.4rem + 5.6vw, 7rem);      /* 64 → 112 */
+  --lh-text: 1.6;
+  --lh-head: 1.1;
+  --track-head: -0.02em;
+
+  /* space, rhythm on 8 */
+  --s-1: 0.5rem;   /* 8 */
+  --s-2: 1rem;     /* 16 */
+  --s-3: 1.5rem;   /* 24 */
+  --s-4: 2.5rem;   /* 40 */
+  --s-5: 4rem;     /* 64 */
+  --s-6: 7rem;     /* 112 */
+  --s-7: 10rem;    /* 160 */
+  --space: clamp(1.25rem, 5vw, 4.5rem);
+  --container: 1280px;
+  --gutter: 1.5rem;
+  --block: clamp(4rem, 2.5rem + 6vw, 7rem);
+
+  /* route line */
+  --track-x: 0.4375rem;           /* centre of the rail inside the container */
+  --track-w: 2px;
+  --track-indent: 2.75rem;        /* text starts here on phones */
+  --stop: 14px;
+
+  /* shape, chrome, motion */
+  --radius: 4px;
+  --header-h: 64px;
+  --btn-h: 56px;
+  --btn-h-sm: 48px;
+  --target: 56px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 600ms;
+  --dur-fast: 150ms;
+  --dur-mid: 250ms;
+}
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 72px;
+    --track-indent: clamp(4rem, 8vw, 7rem);
+  }
+}

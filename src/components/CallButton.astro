@@ -1,0 +1,25 @@
+---
+// The one main action of the page: a call to the call centre, always worded «Подзвонити» (R-008).
+// Telegram is the second action and uses the same component with channel="telegram".
+import Icon from "./Icon.astro";
+import { PHONE_MAIN, TELEGRAM } from "../data/clinic";
+interface Props {
+  variant?: "primary" | "secondary" | "inverse" | "outline-inverse";
+  channel?: "phone" | "telegram";
+  size?: "md" | "sm";
+  withNumber?: boolean;
+  label?: string;
+  rec?: string;
+  class?: string;
+}
+const { variant = "primary", channel = "phone", size = "md", withNumber = true, label, rec, class: cls } = Astro.props;
+const isPhone = channel === "phone";
+const href = isPhone ? PHONE_MAIN.href : TELEGRAM.href;
+const text = label ?? (isPhone ? "Подзвонити" : "Написати в Telegram");
+const showNumber = isPhone && withNumber && !label;
+const ext = isPhone ? {} : { target: "_blank", rel: "noopener" };
+---
+<a class:list={["btn", `btn--${variant}`, size === "sm" && "btn--sm", cls]} href={href} data-rec={rec} {...ext}>
+  <Icon name={isPhone ? "phone" : "telegram"} size={20} />
+  <span>{text}{showNumber && <> <span class="btn__num">{PHONE_MAIN.display}</span></>}</span>
+</a>
